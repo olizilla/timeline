@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang=en>
+<head>
+	<meta charset=utf-8>
+	<title>Slides</title>
+	<script type="text/javascript">
+		(function(){		// ---- Open anonymous function body ------------------------------
+				
+		window.addEventListener('load', onLoad, false);
+		
+		function onLoad() {
+			var video = document.getElementById("video");
+			video.volume = 0;
+			video.addEventListener('timeupdate', timeupdate, false);
+			
+			setInterval(intervalGrab, 2000);
+		}
+		
+		function timeupdate() {
+			var timecode = this.currentTime; 	// this should refer to the video element
+			timecode = timecode.toFixed() 		// format to 0 decimal places
+			var output = document.getElementById("output");
+			output.innerHTML=timecode;
+		}
+		
+		function intervalGrab() {
+			var video = document.getElementById("video");
+			if(video.paused || video.ended) {
+				return
+			}
+			grabframe();
+		}
+		
+		function grabframe() {
+			var video = document.getElementById("video");
+			var slides = document.getElementById("slides");
+			var canvas = document.createElement("canvas");
+			slides.appendChild(canvas);
+			var ctx = canvas.getContext("2d");
+			ctx.drawImage(video, 0, 0);
+		}
+		
+		})();				// ---- Close and execute anonymous function -----------------------
+	</script>
+	<style type="text/css">
+		body	{ text-align:center; font-family: Futura, 'Trebuchet MS', sans-serif	}
+		video	{ width: 200px; height:150px; display: none;}
+		canvas	{ width:200px; height:150px;}
+	</style>
+</head>
+<body>
+	<h1>Video Sync Test</h1>
+	
+	<video id="video" autoplay controls >
+			<source src="doug-stanhope-intro.400x300.mp4" />
+			<source src="doug-stanhope-intro.400x300.ogv" />
+	</video>
+	
+	<div id="slides"></div>
+	
+	<div id="output">
+		Nothing yet.
+	</div>
+	
+	<div id="debug">
+	
+	</div>
+	
+</body>
+</html>

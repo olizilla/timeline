@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang=en>
+<head>
+	<meta charset=utf-8>
+	<title>Simple Captions</title>
+	<script type="text/javascript">
+		(function(){		// ---- Open anonymous function body ------------------------------
+				
+		var video;
+		
+		window.addEventListener('load', onLoad, false);
+		
+		/* On page load */
+		function onLoad() {
+			video = document.getElementById("video");
+/* 			video.volume = 0; */
+
+			setInterval(pollVideo, 90);
+			
+			setUpCaptionLinks();
+		}
+				
+		function setUpCaptionLinks() {
+			var captions = document.getElementById("captions").getElementsByTagName("a");
+			for (var i = 0; i < captions.length; i++) {
+				
+				console.log(captions[i]);
+			
+				captions[i].onclick = function(){ 
+					var timecode = parseFloat(this.getAttribute("start"));
+					video.currentTime = timecode;
+				};
+				captions[i].setAttribute("href", "#" + captions[i].getAttribute("start"));
+			}
+		}
+		
+		function pollVideo() {
+			timecode = video.currentTime.toFixed(1);
+			document.getElementById("output").innerHTML = timecode;
+			var caption = document.getElementById("caption");
+			var slide = findSlide(video.currentTime);
+			if (slide) {
+				document.getElementById("caption").innerHTML = '';
+				document.getElementById("caption").appendChild(slide.cloneNode(true));
+			}
+		}		
+		
+		function findSlide(timecode) {
+			var captions = document.getElementById("captions").childNodes;
+			var slide;
+			
+			// find a slide who starts later, and return the previous one.
+			for (var i = 0; slide = captions[i]; i++) {
+				var start = slide.getAttribute && parseFloat(slide.getAttribute("start"));
+				if (timecode < start) {
+					return slide.previousSibling.previousSibling;
+				}
+			}
+		}
+		
+		})();				// ---- Close and execute anonymous function -----------------------
+	</script>
+	<style type="text/css">
+		body	{ text-align:center; font-family:Futura, 'Trebuchet MS'		}
+		video	{ width:600px; height:450px; background-color: black; margin:0; }
+		#caption{ width:580px; height:3em; 
+				  padding:10px; margin:-4px auto 0;
+				  font-size:1.4em; display:block;
+				  color:white; background-color: black;
+				}
+		#captions { width:600px; margin:2em auto; }		
+			  a {  text-decoration: none;  color: inherit; }
+		#captions a { display: block; margin-bottom: 1em; text-align: left;}
+		#captions a:before { content: attr(start) ": ";}
+	</style>
+</head>
+<body>
+	<h1>Slides & Captions</h1>
+	<div id="output">
+		Nothing yet.
+	</div>	
+	<video id="video" controls >
+			<source src="doug-stanhope-intro.400x300.mp4" />
+			<source src="doug-stanhope-intro.400x300.ogv" />
+	</video>
+	<div id="caption"></div>
+	<div id="captions">
+		<a href="#" start="0.0"></a>
+		<a href="#" start="4.0">New York is baffling in that...</a>
+		<a href="#" start="6.0">it's a city that prides itself on being an absolute shithole</a>
+		<a href="#" start="10.3">it's like theres nothing good here</a>
+		<a href="#" start="11.9">and people are proud of that</a>
+		<a href="#" start="13.0">they're happy... "uh hur hur hur"</a>
+		<a href="#" start="15.0">"oh it's over-priced and it's over-populated<br/>and it stinks like piss"</a>
+		<a href="#" start="20.1">Comics!... Comics film specials here</a>
+		<a href="#" start="22.6">and they all open with a joke about "yeahh.. I spend $8000 a month for 9 square feet</a>
+		<a href="#" start="28.9">and you go "why don't you fucking leave?"</a>
+		<a href="#" start="31.5">why do people stay here?</a>
+	</div>
+	
+	<div id="slides">
+		<img start="60.0" src="http://oli.zilla.org.uk/stuff/zilla/olizilla.png" />
+	</div>
+</body>
+</html>

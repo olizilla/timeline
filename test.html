@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang=en>
+<head>
+	<meta charset=utf-8>
+	<title>Wacky things you can use as an identifier in JavaScript</title>
+</head>
+<body>
+	<script type="text/javascript">
+	
+		var foo = new Object();
+		
+		var stringsWithDots = 'moo.too';
+		foo[possiblyIllegalIdentifier] = stringsWithDots;
+		
+		
+		
+		document.write('<h1>Tesiting</h1>');
+		document.write(foo[possiblyIllegalIdentifier]);
+		
+		
+		var timeline = new Object();
+		timeline['0.0'] = 	{ start=0.0,	end=2.0,	thing:"caption",	node:"someNode"		};
+		timeline['4.0'] = 	{ start=4.0,	end=2.0,  	thing:"slide",		node:"otherNode"	};
+		timeline['10.0'] = 	{ start=0.0,	end=2.0,  	thing:"slide",		node:"nodeX"	};
+		timeline['20.0'] = 	{ start=0.0,	end=2.0,  	thing:"function",	node:"nodeY"	};
+		
+		var timeline = new Object();
+		timeline['0.0'] = 	{ start=0.0,	end=2.0,		};
+		timeline['4.0'] = 	{
+		 						start=4.0,	
+		 						end=2.0,  	
+		 						onStart:function{alert(this.start);},	
+		 						onEnd:function{alert(this.end);}
+		 					}
+		timeline['10.0'] = 	{ start=0.0,	end=2.0,  	onStart:"slide",	onEnd:"nodeX"	};
+		
+		
+		functiin pollVideo() {
+			now = video.currentTime.toFixed(1).toString();
+			if timeline[now] 
+		}
+		
+	</script>
+</body>
+</html>
