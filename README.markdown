@@ -15,3 +15,5 @@ The current demo allows you to grab slides from the video using the 's' key.
 Clicking on the slide will jump you to that time in the video. 
 Let the video play from the beginning and the slides will display when the 
 associated video time is reached.
+
+Fin
